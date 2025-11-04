@@ -1,0 +1,40 @@
+.app {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin-top: 3rem;
+}
+
+input {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 220px;
+}
+
+button {
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #0078ff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005fcc;
+}
+
+.card {
+  margin-top: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: inline-block;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
