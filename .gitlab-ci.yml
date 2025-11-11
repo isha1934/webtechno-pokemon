@@ -1,5 +1,10 @@
 image: node:20
 
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - app/frontend/node_modules
+
 stages:
   - install
   - build
@@ -15,14 +20,16 @@ build:
   stage: build
   script:
     - cd app/frontend
+    - npm ci
     - npm run build
   artifacts:
+    when: always
     paths:
       - app/frontend/dist
-    when: always
 
 test:
   stage: test
   script:
     - cd app/frontend
+    - npm ci
     - npm test || echo "No test script"
