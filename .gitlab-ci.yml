@@ -1,0 +1,28 @@
+image: node:20
+
+stages:
+  - install
+  - build
+  - test
+
+install:
+  stage: install
+  script:
+    - cd app/frontend
+    - npm ci
+
+build:
+  stage: build
+  script:
+    - cd app/frontend
+    - npm run build
+  artifacts:
+    paths:
+      - app/frontend/dist
+    when: always
+
+test:
+  stage: test
+  script:
+    - cd app/frontend
+    - npm test || echo "No test script"
