@@ -33,3 +33,11 @@ test:
     - cd app/frontend
     - npm ci
     - npm test || echo "No test script"
+
+deploy:
+  stage: deploy
+  script:
+    - npm install -g vercel
+    - vercel --token $VERCEL_TOKEN --prod --confirm --cwd app/frontend
+  only:
+    - main    

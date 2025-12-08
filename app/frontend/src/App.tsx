@@ -2,6 +2,26 @@ import { useState } from "react";
 import { fetchPokemon } from "./api";
 import "./App.css";
 
+function ErrorButton() {
+  return (
+    <button
+      onClick={() => {
+        throw new Error("This is your first Sentry error!");
+      }}
+      style={{
+        padding: "10px 20px",
+        backgroundColor: "red",
+        color: "white",
+        borderRadius: "8px",
+        marginTop: "20px",
+        cursor: "pointer",
+      }}
+    >
+      Break the world
+    </button>
+  );
+}
+
 export default function App() {
   const [query, setQuery] = useState("");
   const [pokemon, setPokemon] = useState<any>(null);
@@ -23,6 +43,8 @@ export default function App() {
   return (
     <div className="app">
       <h1>Hello World – PokéAPI</h1>
+      <ErrorButton />
+
       <form onSubmit={handleSearch}>
         <input
           type="text"
