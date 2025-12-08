@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { fetchPokemon } from "./api";
 import "./App.css";
+import * as Sentry from "@sentry/react";
 
 function ErrorButton() {
   return (
@@ -37,12 +38,14 @@ export default function App() {
       setPokemon(data);
     } catch (err) {
       setError("No Pokémon found. Try another name!");
+      Sentry.captureException(err);
     }
   };
 
   return (
     <div className="app">
       <h1>Hello World – PokéAPI</h1>
+
       <ErrorButton />
 
       <form onSubmit={handleSearch}>
@@ -67,10 +70,7 @@ export default function App() {
           />
           <p>Height: {pokemon.height / 10} m</p>
           <p>Weight: {pokemon.weight / 10} kg</p>
-          <p>
-            Types:{" "}
-            {pokemon.types.map((t: any) => t.type.name).join(", ")}
-          </p>
+          <p>Types: {pokemon.types.map((t: any) => t.type.name).join(", ")}</p>
         </div>
       )}
     </div>
