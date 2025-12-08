@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { fetchPokemon } from "./api";
 import "./App.css";
-import * as Sentry from "@sentry/react";
 
 function ErrorButton() {
   return (
@@ -15,7 +14,6 @@ function ErrorButton() {
         color: "white",
         borderRadius: "8px",
         marginTop: "20px",
-        cursor: "pointer",
       }}
     >
       Break the world
@@ -38,7 +36,6 @@ export default function App() {
       setPokemon(data);
     } catch (err) {
       setError("No Pokémon found. Try another name!");
-      Sentry.captureException(err);
     }
   };
 
