@@ -1,10 +1,18 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import App from './App';
+import * as Sentry from "@sentry/react";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+Sentry.init({
+  dsn: "https://2bfdd09fd38a84cb2ff44fc7a82b6c6a@o4510501449826304.ingest.de.sentry.io/4510501458083920",
+  sendDefaultPii: true,
+});
+
+// Force-test error OUTSIDE React to verify Sentry works
+setTimeout(() => {
+  throw new Error(" TEST Error ");
+}, 2000);
+
+createRoot(document.getElementById("root")!).render(
+  <App />
+);
