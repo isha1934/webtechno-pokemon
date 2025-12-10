@@ -9,6 +9,7 @@ stages:
   - install
   - build
   - test
+  - deploy
 
 install:
   stage: install
