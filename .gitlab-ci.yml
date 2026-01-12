@@ -1,26 +1,36 @@
 image: node:20
 
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - app/frontend/node_modules
-
 stages:
   - install
   - build
   - test
 
+variables:
+  NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"
+
+cache:
+  key:
+    files:
+      - app/frontend/package-lock.json
+  paths:
+    - .npm/
+  policy: pull-push
+
 install:
   stage: install
   script:
     - cd app/frontend
-    - npm ci
+    - npm ci --prefer-offline --no-audit
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - app/frontend/node_modules/
 
 build:
   stage: build
+  needs: ["install"]
   script:
     - cd app/frontend
-    - npm ci
     - npm run build
   artifacts:
     when: always
@@ -29,7 +39,7 @@ build:
 
 test:
   stage: test
+  needs: ["install"]
   script:
     - cd app/frontend
-    - npm ci
-    - npm test || echo "No test script"
+    - npm test
