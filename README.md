@@ -1,6 +1,6 @@
 # WebTechno
 
-[![Pipeline Status](https://gitlab.bht-berlin.de/%{project_path}/badges/%{default_branch}/pipeline.svg)](https://gitlab.bht-berlin.de/%{project_path}/-/pipelines)
+[![Pipeline Status](https://gitlab.bht-berlin.de/isha1934/webtechno/badges/main/pipeline.svg)](https://gitlab.bht-berlin.de/isha1934/webtechno/-/pipelines)
 
 ## Getting started
 
