@@ -6,7 +6,7 @@ describe("App UI", () => {
 
   it("renders the main title", () => {
     render(<App />)
-    expect(screen.getByText(/Hello World/i)).toBeDefined()
+    expect(screen.getByText(/Search Pokémon/i)).toBeDefined()
   })
 
   it("renders the search input", () => {
