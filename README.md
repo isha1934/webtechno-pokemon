@@ -42,6 +42,24 @@ Use the built-in continuous integration in GitLab.
 - [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
 - [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
 
+## CI/CD Job Overview
+
+The project uses a GitLab CI/CD pipeline with the following jobs:
+
+### Install
+- Installs all project dependencies using `npm ci`
+- Ensures a clean and reproducible environment for the pipeline
+
+### Build
+- Builds the frontend application using Vite
+- Generates production-ready files in the `dist/` directory
+- Build artifacts are stored for later use
+
+### Test
+- Runs automated tests using Vitest
+- Ensures application functionality and code quality
+- The pipeline fails if tests do not pass
+
 ---
 
 # Editing this README
