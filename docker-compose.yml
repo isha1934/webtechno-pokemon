@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+  frontend:
+    build: ./app/frontend
+    ports:
+      - "8080:80"
+    container_name: pokemon-frontend
