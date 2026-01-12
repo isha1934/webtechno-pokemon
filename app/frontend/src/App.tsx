@@ -40,7 +40,7 @@ const handleSearch = async (e: React.FormEvent) => {
     Sentry.captureException(err, {
       tags: {
         feature: "search",
-      },
+      },  
       extra: {
         searchedValue: query,
       },
