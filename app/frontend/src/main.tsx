@@ -8,10 +8,6 @@ Sentry.init({
   sendDefaultPii: true,
 });
 
-// Force-test error OUTSIDE React to verify Sentry works
-setTimeout(() => {
-  throw new Error(" TEST Error ");
-}, 2000);
 
 createRoot(document.getElementById("root")!).render(
   <App />
