@@ -1,5 +1,7 @@
 # WebTechno
 
+[![Pipeline Status](https://gitlab.bht-berlin.de/%{project_path}/badges/%{default_branch}/pipeline.svg)](https://gitlab.bht-berlin.de/%{project_path}/-/pipelines)
+
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
