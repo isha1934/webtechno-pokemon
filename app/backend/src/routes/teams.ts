@@ -1,5 +1,12 @@
 import { Router } from "express";
-import { createTeam, teams } from "../storage/teams";
+import db from "../db";
+import {
+  createTeam,
+  getTeams,
+  findTeam,
+  addPokemonToTeam,
+  removePokemonFromTeam,
+} from "../storage/teams";
 
 const router = Router();
 
@@ -12,11 +19,13 @@ router.post("/", (req, res) => {
 });
 
 router.get("/", (_req, res) => {
+  const teams = getTeams();
   res.json(teams);
 });
 
 router.post("/:id/pokemon", (req, res) => {
-  const team = teams.find((t) => t.id === req.params.id);
+  const teamId = req.params.id;
+  const team = findTeam(teamId);
   if (!team) return res.status(404).json({ error: "Team not found" });
 
   const pokemonName = String(req.body?.pokemonName || "").trim().toLowerCase();
@@ -30,18 +39,31 @@ router.post("/:id/pokemon", (req, res) => {
     return res.status(400).json({ error: "Team already has 6 Pokémon" });
   }
 
-  team.pokemons.push(pokemonName);
-  res.json(team);
+  const updated = addPokemonToTeam(teamId, pokemonName);
+  res.json(updated);
 });
 
 router.delete("/:id/pokemon/:name", (req, res) => {
-  const team = teams.find((t) => t.id === req.params.id);
+  const teamId = req.params.id;
+  const team = findTeam(teamId);
   if (!team) return res.status(404).json({ error: "Team not found" });
 
   const name = req.params.name.trim().toLowerCase();
-  team.pokemons = team.pokemons.filter((p) => p !== name);
+  const updated = removePokemonFromTeam(teamId, name);
 
-  res.json(team);
+  res.json(updated);
 });
 
-export default router; 
+router.delete("/:id", (req, res) => {
+  const teamId = req.params.id;
+  const team = findTeam(teamId);
+  if (!team) return res.status(404).json({ error: "Team not found" });
+
+  // Delete the team from the database
+  const stmt = db.prepare("DELETE FROM teams WHERE id = ?");
+  stmt.run(teamId);
+
+  res.status(204).send();
+});
+
+export default router;

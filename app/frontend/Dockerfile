@@ -1,6 +1,8 @@
 # Stage 1: Build
 FROM node:18-alpine AS builder
 WORKDIR /app
+ARG VITE_BACKEND_URL
+ENV VITE_BACKEND_URL=${VITE_BACKEND_URL}
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .

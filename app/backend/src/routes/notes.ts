@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteNote, notes , saveNote } from "../storage/notes";
+import { saveNote, getNote, deleteNote } from "../storage/notes";
 
 const router = Router();
 
@@ -10,25 +10,20 @@ router.post("/:pokemon", (req, res) => {
 
   if (!note) return res.status(400).json({ error: "Note required" });
 
-  notes[pokemon] = {
-    pokemon,
-    note,
-    updatedAt: new Date().toISOString(),
-  };
+  const saved = saveNote(pokemon, note);
 
-  return res.json(notes[pokemon]);
+  return res.json(saved);
 });
 
 // GET /api/notes/:pokemon
 router.get("/:pokemon", (req, res) => {
   const pokemon = req.params.pokemon.trim().toLowerCase();
-  const found = notes[pokemon];
+  const found = getNote(pokemon);
 
   if (!found) return res.status(404).json({ error: "No note found" });
 
   return res.json(found);
 });
-// GET /api/notes/:pokemon
 
 router.delete("/:pokemon", (req, res) => {
   const pokemon = req.params.pokemon.toLowerCase();

@@ -16,6 +16,20 @@ To run the project locally without Docker:
 cd app/frontend
 npm install
 npm run dev  
+
+To run both frontend and backend locally (dev):
+
+```powershell
+# in one terminal - backend
+cd app/backend
+npm install
+npm run dev
+
+# in a second terminal - frontend
+cd app/frontend
+npm install
+npm run dev
+```
 ```
 
 ---
@@ -95,6 +109,28 @@ Run the app easily with one command from the project root:
 docker compose up -d --build
 
 The application will be available at: http://localhost:8080
+
+Notes on Docker
+- The Compose configuration now runs both `frontend` and `backend` services.
+- The frontend is built with a build-arg `VITE_BACKEND_URL` so the static build points to the backend container at `http://backend:4000`.
+- Backend example envs are in `app/backend/.env.example` and frontend example envs are in `app/frontend/.env.example`.
+
+## Troubleshooting native build errors on Windows
+
+If you see native build errors when running `npm install` in `app/backend` on Windows (errors mentioning `node-gyp`, `Visual Studio`, or `msvs`), that's because `better-sqlite3` is a native module that must be compiled. You have two easy options:
+
+- Use Docker (recommended): the project Dockerfile now installs the native build tools inside the container and compiles native modules during image build. From the repo root run:
+
+```powershell
+docker compose up -d --build
+```
+
+- Or install the native build toolchain on Windows and then run `npm install` locally:
+    1. Install the Visual Studio Build Tools (2022) with the "Desktop development with C++" workload. Get it from: https://visualstudio.microsoft.com/downloads/ (choose "Build Tools for Visual Studio").
+    2. Install Python 3 and ensure `python` (or `python3`) is on your PATH.
+    3. Restart your terminal and rerun `npm install` inside `app/backend`.
+
+After that, `better-sqlite3` should compile successfully. If you'd rather avoid native modules on Windows, I can switch the project to a JS-based SQLite driver or keep using Docker so you don't need to install build tools locally.
 
 ---
 
