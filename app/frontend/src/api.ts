@@ -1,11 +1,13 @@
+const BACKEND_URL =
+  import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+
 export async function fetchPokemon(name: string) {
-  await new Promise(res => setTimeout(res, 1200));
+  const res = await fetch(`${BACKEND_URL}/api/pokemon/${name}`);
 
-  const response = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`
-  );
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error || "Pokémon not found");
+  }
 
-  if (!response.ok) throw new Error("Pokémon not found");
-
-  return response.json();
+  return res.json();
 }

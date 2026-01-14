@@ -10,7 +10,7 @@ describe("App UI", () => {
   })
 
   it("renders the search input", () => {
-    render(<App />)
+    render(<App />)  
     const input = screen.getByPlaceholderText(/Search Pokémon/i)
     expect(input).toBeDefined()
   })
