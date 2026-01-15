@@ -1,4 +1,8 @@
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+if (!BACKEND_URL) {
+  throw new Error("VITE_BACKEND_URL is not defined");
+}
 
 async function request(path: string, options?: RequestInit) {
   const res = await fetch(`${BACKEND_URL}${path}`, {
