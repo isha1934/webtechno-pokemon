@@ -1,23 +1,23 @@
-FROM node:18-bullseye-slim AS builder
+FROM node:20-bookworm AS builder
+
 WORKDIR /app
 
 # Native deps for better-sqlite3
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-      python3 \
-      build-essential \
-      g++ \
-      make \
-      libsqlite3-dev && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+  python3 \
+  build-essential \
+  libsqlite3-dev \
+  && rm -rf /var/lib/apt/lists/*
 
-COPY package.json package-lock.json* ./
-RUN npm install
+COPY package.json package-lock.json ./
+RUN npm ci
 
-COPY . .
+COPY src ./src
+COPY tsconfig.json ./
+
 RUN npm run build
 
-FROM node:18-bullseye-slim
+FROM node:20-bookworm
 WORKDIR /app
 
 ENV NODE_ENV=production
